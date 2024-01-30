@@ -4,13 +4,16 @@ const decreaseBtn = document.getElementById('decrease')
 const sizeElem = document.getElementById('size')
 const colorBoard = document.getElementById('color')
 const clearElem = document.getElementById('clear')
+const eraserBtn = document.getElementById('eraser')
 const ctx = canvas.getContext('2d');
 
-let size = 20
+
+let size = 10
 let isPressed = false
 let color = "black"
 let x 
 let y
+let eraserMode = false
 
 canvas.addEventListener('mousedown', (e) => {
     isPressed = true
@@ -47,18 +50,33 @@ function updateSizeOnScreen() {
 function drawCircle(x, y) {
     ctx.beginPath();
     ctx.arc(x, y, size, 0, Math.PI*2, true)
-    ctx.fillStyle = color
+    if(eraserBtn.className === 'on') {
+        ctx.fillStyle = '#f7f5f7';
+        //ctx.globalAlpha = 1.0;
+    } else {
+        ctx.fillStyle = color
+        //ctx.globalAlpha = 1.0;
+    }
     ctx.fill()
+    ctx.globalAlpha = 1.0;
 }
 
 function drawLine(x1, y1, x2, y2) {
     ctx.beginPath();
     ctx.moveTo(x1, y1)
     ctx.lineTo(x2, y2)
-    ctx.strokeStyle = color
+    if (eraserBtn.className === 'on') {
+        ctx.strokeStyle = '#f7f5f7';
+       // ctx.globalAlpha = 1.0;
+    } else {
+        ctx.strokeStyle = color;
+      //  ctx.globalAlpha = 1.0;
+    }
     ctx.lineWidth = size * 2
     ctx.stroke()
+    ctx.globalAlpha = 1.0;
 }
+
 
 increaseBtn.addEventListener('click', (e) => {
     size += 2
@@ -82,6 +100,20 @@ colorBoard.addEventListener('change', (e) =>
     color = e.target.value
 )
 
+
+
+eraserBtn.addEventListener('click', (e) => {
+    eraserMode = !eraserMode
+    if(eraserMode){
+        eraserBtn.classList.add('on')
+        eraserBtn.classList.remove('off')
+    } else {    
+        eraserBtn.classList.remove('on')
+        eraserBtn.classList.add('off')
+        
+    }
+
+})
+
+
 clearElem.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height))
-
-

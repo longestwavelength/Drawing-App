@@ -24,7 +24,7 @@ canvas {
     background-color: orange;
     border: 1.5px solid orange;
     display: flex;
-    width: 603px;
+    width: 703px;
     padding: 1rem;
 }
 
@@ -45,3 +45,8 @@ canvas {
 .toolbox > *:last-child {
     margin-left: auto;
 }
+
+.on {
+    box-shadow: 5px 5px 5px black;
+}
+
